@@ -1,11 +1,11 @@
 #! /usr/bin/env python
 
-"""
+'''
 @author Xia Wenwen
 @date 2018-08-01
 This python script is used to read data file into memory and
 store the data into proper data structure
-"""
+'''
 
 from __future__ import print_function
 import os
@@ -13,9 +13,14 @@ import time
 from network_data_manager import NetworkDataManager
 from network_record import NetworkRecord
 
-
+'''
+This method is the entry point to load data from file system into memory
+@param file_path: the SocialNetwork.txt file path in file system
+@param data_manager: the instance of NetworkDataManager class to hold data storage structures
+@return the total number of people in the txt file
+'''
 def load_data(file_path, data_manager):
-    print(file_path)
+    print("file path is {}".format(file_path))
     t0 = time.time()
     with open(file_path) as f:
         print ("loading data ...")
@@ -27,8 +32,18 @@ def load_data(file_path, data_manager):
     duration = t1-t0
     print("time consumed for data loading is {} seconds".format(duration))
 
+    # total number of people equal to the length of the person_dic
+    total_num = len(data_manager.person_dict)
+    print("total number of people is {}".format(total_num))
+    return total_num
 
 
+'''
+This method is to store each line of the txt file into data_manager
+@param line: the each line of txt file, containing two names separated by comma,
+@param data_manager: the instance of NetworkDataManager
+
+'''
 def store_data(line, data_manager):
     line_pair = list()
     for name in line.split(','):
@@ -54,14 +69,12 @@ def store_data(line, data_manager):
             record_list = [record_friend_id]
             new_record = NetworkRecord(record_name, record_distance, record_list)
             data_manager.add_record(record_id, new_record)
-            #new_record.print_all()
 
         # existing record, update the record_list
         else:
             existing_record = data_manager.record_dict[record_id]
             existing_record.add_friend(record_friend_id)
             existing_record.remove_duplicates()
-            #existing_record.print_all()
 
 
 if __name__ == '__main__':

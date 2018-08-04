@@ -21,7 +21,6 @@ class NetworkRecord:
     def add_friend(self, friend_id):
         self.friends_list.append(friend_id)
 
-
     def remove_duplicates(self):
         self.friends_list = list(set(self.friends_list))
 

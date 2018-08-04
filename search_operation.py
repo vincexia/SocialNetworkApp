@@ -3,7 +3,7 @@
 """
 @author Xia Wenwen
 @date 2018-08-02
-This python script is used to start the social network application
+This python script is used to provide the search algorithm for the social network data
 """
 
 from __future__ import print_function
@@ -12,16 +12,20 @@ from sort_search_algorithms import sort, binary_search
 
 '''
 Check whether there is the same element for the two sorted lists with ascending order
+@param active_list: the list, which actively searches and provides the targets
+@param passive_list: the list, which passively accepts the comparison with the targets
+@return True if at least one same element exists; False if no common element exists
+Assumption: the two lists above have been sorted with ascending order
 '''
 def check_intersection_existence(active_list, passive_list):
     # check empty list
     if len(active_list) == 0 or len(passive_list) == 0:
         return False
 
-    # take the max of the two smallest ids, at the first index location
+    # take the max of the two smallest ids, which are at the first index location
     lower_limit = max(active_list[0], passive_list[0])
 
-    # take the min of the two largest ids, at the last index location
+    # take the min of the two largest ids, which are at the last index location
     higher_limit = min(active_list[-1], passive_list[-1])
 
     if lower_limit > higher_limit:
@@ -42,6 +46,10 @@ def check_intersection_existence(active_list, passive_list):
 '''
 Truncate ascending list to the range [low, high]
 The purpose of truncation is to reduce the search range
+@param lst: the input list with ascending order
+@param low: the lower limit for the elements in the list
+@param high: the higher limit for the elements in the list
+@return truncated_lst: list with elements at range [low, high]
 '''
 def truncate_ascending_list(lst, low, high):
     if len(lst) == 0:
@@ -51,9 +59,13 @@ def truncate_ascending_list(lst, low, high):
 
 
 '''
-Based on the loaded records, expands the current list to the outer layer
-The offset list is the common friends list of the inner layer.
-outer_layer_list = (friends list of current layer) - (friends list of the inner layer) 
+Based on the loaded records, expand the current list to the outer layer
+@param current_list: the friends list of the current search layer
+@param offset_list: the friends list of the previous search layer
+@param loaded_data_manager: the data structures to hold the loaded data
+@return outer_layer_list: the list of ids for the next layer outwards
+outer_layer_list = (friends list of current layer list) - (friends list of the inner/previous layer) 
+If the out_layer_list is empty, the search operation should be stopped and no minimum distance is found.
 '''
 def expand_to_outer_layer(current_list, offset_list, loaded_data_manager):
     full_outer_layer_list = []
@@ -68,7 +80,7 @@ def expand_to_outer_layer(current_list, offset_list, loaded_data_manager):
     # Remove the element shown in offset list, from full_outer_layer_list
     outer_layer_list = [x for x in full_outer_layer_list if x not in offset_list]
 
-    ##?? consider the end scenario, outer_layer_list is empty? there is no minimun distance for two ids
+    #If the outer_layer_list is empty, there is no minimum distance for the two persons
     if len(outer_layer_list) == 0:
         print ("empty outer layer list!")
         return outer_layer_list
@@ -81,6 +93,12 @@ def expand_to_outer_layer(current_list, offset_list, loaded_data_manager):
 
 '''
 Start the search process
+@param id_A: the id of the first person
+@param record_A: the instance of NetworkRecord for id_A
+@param id_B: the id of the second person
+@param record_B: the instance of the NetworkRecord for id_B
+@param loaded_data_manager: the instance of the NetworkDataManager to hold the loaded data
+@return the minimum distance for the two persons. If no minimum distance is found, return -1
 '''
 def search_distance(id_A, record_A, id_B, record_B, loaded_data_manager):
     # A and B are the same, distance is 0
@@ -88,7 +106,7 @@ def search_distance(id_A, record_A, id_B, record_B, loaded_data_manager):
         print ("minimum distance is {}".format(0))
         return 0
 
-    # A and B have distance one
+    # A and B have distance one. They are direct friends
     elif (id_A in record_B.friends_list or id_B in record_A.friends_list) :
         print("minimum distance is {}".format(1))
         return 1

@@ -9,22 +9,26 @@ This python script is used to start the social network application
 from __future__ import print_function
 import os
 import sys
-import argparse
 from data_file_reader import load_data
 from network_data_manager import NetworkDataManager
 from search_operation import search_distance
 
-
+'''
+The main method takes the two people's names, and performs search operation on the loaded data structures
+The name_A and name_B can be changed based on user's preferences
+'''
 def main():
     # initialize NetworkDataManager with two empty dictionaries: record_dict, person_dict
     data_manager = NetworkDataManager(dict(), dict())
 
     # load data into data_manager
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    load_data(dir_path + '/SocialNetwork_5.txt', data_manager)
+    load_data(dir_path + '/SocialNetwork.txt', data_manager)
 
-    name_A = "MARTIN_OMERSA"
-    name_B = "CHRIS_POLAND"
+    # name of the first person STACEY_STRIMPLE
+    name_A = "STACEY_STRIMPLE"
+    # name of the second person RICH_OMLI
+    name_B = "RICH_OMLI"
 
     try:
         id_A = data_manager.person_dict[name_A]
