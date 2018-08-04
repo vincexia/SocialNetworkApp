@@ -9,17 +9,23 @@ store the data into proper data structure
 
 from __future__ import print_function
 import os
+import time
 from network_data_manager import NetworkDataManager
 from network_record import NetworkRecord
 
 
 def load_data(file_path, data_manager):
     print(file_path)
+    t0 = time.time()
     with open(file_path) as f:
+        print ("loading data ...")
         for line in f:
             #print (line)
             store_data(line,data_manager)
         print ("load data completed!")
+    t1 = time.time()
+    duration = t1-t0
+    print("time consumed for data loading is {} seconds".format(duration))
 
 
 
@@ -48,18 +54,18 @@ def store_data(line, data_manager):
             record_list = [record_friend_id]
             new_record = NetworkRecord(record_name, record_distance, record_list)
             data_manager.add_record(record_id, new_record)
-            new_record.print_all()
+            #new_record.print_all()
 
         # existing record, update the record_list
         else:
             existing_record = data_manager.record_dict[record_id]
             existing_record.add_friend(record_friend_id)
             existing_record.remove_duplicates()
-            existing_record.print_all()
+            #existing_record.print_all()
 
 
 if __name__ == '__main__':
     # initialize NetworkDataManager with two empty dictionaries: record_dict, person_dict
     data_manager = NetworkDataManager(dict(), dict())
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    load_data(dir_path + '/SocialNetwork_5.txt', data_manager)
+    load_data(dir_path + '/SocialNetwork.txt', data_manager)
