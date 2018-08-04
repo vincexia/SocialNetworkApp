@@ -47,7 +47,6 @@ def truncate_ascending_list(lst, low, high):
     if len(lst) == 0:
         return lst
     truncated_lst = [x for x in lst if x >= low and x <=high]
-    print ("truncated list: {}".format(truncated_lst))
     return truncated_lst
 
 
@@ -64,14 +63,19 @@ def expand_to_outer_layer(current_list, offset_list, loaded_data_manager):
         # remove duplicates
         full_outer_layer_list = list(set(full_outer_layer_list))
 
+    print("full outer layer list is {}".format(full_outer_layer_list))
+    print ("offset list is {}".format(offset_list))
     # Remove the element shown in offset list, from full_outer_layer_list
     outer_layer_list = [x for x in full_outer_layer_list if x not in offset_list]
 
     ##?? consider the end scenario, outer_layer_list is empty? there is no minimun distance for two ids
+    if len(outer_layer_list) == 0:
+        print ("empty outer layer list!")
+        return outer_layer_list
 
     # sort the outer layer list
     outer_layer_list = sort(outer_layer_list)
-    print (outer_layer_list)
+    print ("outer layer list is {}".format(outer_layer_list))
     return outer_layer_list
 
 
@@ -122,14 +126,21 @@ def search_distance(id_A, record_A, id_B, record_B, loaded_data_manager):
                     # update the pre with the cur
                     record_B_search_pre = record_B_search_cur
 
-                    # update the cur with the outer layer
+                    # get the cur and offset lists
                     B_cur_list = record_B_search_cur.friends_list
-                    outer_layer_list_B = expand_to_outer_layer(B_cur_list, record_B_search_temp, loaded_data_manager)
-                    increment_distance_B = record_B_search_cur.distance + 1
-                    record_B_search_cur = NetworkRecord(record_B.name, increment_distance_B, outer_layer_list_B)
+                    B_offset_list = record_B_search_temp.friends_list
+                    # get the outer layer list
+                    outer_layer_list_B = expand_to_outer_layer(B_cur_list, B_offset_list, loaded_data_manager)
+                    if len(outer_layer_list_B) == 0:
+                        print ("cannot find minimum distance. Search completed while expanding the second person!")
+                        break;
+                    else:
+                        # update the cur with the outer layer
+                        increment_distance_B = record_B_search_cur.distance + 1
+                        record_B_search_cur = NetworkRecord(record_B.name, increment_distance_B, outer_layer_list_B)
 
-                    # toggle active flag to "B"
-                    active_flag = "B"
+                        # toggle active flag to "B"
+                        active_flag = "B"
 
             # active_flag equal to "B"
             else:
@@ -149,14 +160,24 @@ def search_distance(id_A, record_A, id_B, record_B, loaded_data_manager):
                     # update the pre with the cur
                     record_A_search_pre = record_A_search_cur
 
-                    # update the cur with the outer layer
+                    # get the cur and offset lists
                     A_cur_list = record_A_search_cur.friends_list
-                    outer_layer_list_A = expand_to_outer_layer(A_cur_list, record_A_search_temp, loaded_data_manager)
-                    increment_distance_A = record_A_search_cur.distance + 1
-                    record_A_search_cur = NetworkRecord(record_A.name, increment_distance_A, outer_layer_list_A)
+                    A_offset_list = record_A_search_temp.friends_list
+                    # get the outer layer list
+                    outer_layer_list_A = expand_to_outer_layer(A_cur_list, A_offset_list, loaded_data_manager)
+                    if len(outer_layer_list_A) == 0:
+                        print ("cannot find minimum distance. Search completed while expanding the first person!")
+                        break;
+                    else:
+                        # update the cur with the outer layer
+                        increment_distance_A = record_A_search_cur.distance + 1
+                        record_A_search_cur = NetworkRecord(record_A.name, increment_distance_A, outer_layer_list_A)
 
-                    # toggle active flag to "A"
-                    active_flag = "A"
+                        # toggle active flag to "A"
+                        active_flag = "A"
+
+        # after the break, return status about no minimum distance found
+        return -1
 
 if __name__ == '__main__':
     active_list = [1, 3, 4, 8, 9, 23]
