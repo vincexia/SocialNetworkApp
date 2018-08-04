@@ -44,15 +44,15 @@ def store_data(line, data_manager):
         record_friend_id = data_manager.person_dict[record_friend_name]
 
         # new record to be stored
-        if record_name not in data_manager.record_dict:
+        if record_id not in data_manager.record_dict:
             record_list = [record_friend_id]
-            new_record = NetworkRecord(record_name, record_id, record_distance, record_list)
-            data_manager.add_record(record_name, new_record)
+            new_record = NetworkRecord(record_name, record_distance, record_list)
+            data_manager.add_record(record_id, new_record)
             new_record.print_all()
 
         # existing record, update the record_list
         else:
-            existing_record = data_manager.record_dict[record_name]
+            existing_record = data_manager.record_dict[record_id]
             existing_record.add_friend(record_friend_id)
             existing_record.remove_duplicates()
             existing_record.print_all()

@@ -17,9 +17,9 @@ class NetworkDataManager:
     @name person'name as key of the dict
     @record NetworkRecord instance as the value of the dict
     """
-    def add_record(self, name, record):
-        if name not in self.record_dict:
-            self.record_dict[name] = record
+    def add_record(self, id, record):
+        if id not in self.record_dict:
+            self.record_dict[id] = record
 
     """
     @name person's name as the key of the dict
@@ -29,5 +29,5 @@ class NetworkDataManager:
         if name not in self.person_dict:
             length = len(self.person_dict)
             self.person_dict[name] = length + 1
-            print ("{}:{}".format(name, self.person_dict[name]))
+            #print ("{}:{}".format(name, self.person_dict[name]))
 

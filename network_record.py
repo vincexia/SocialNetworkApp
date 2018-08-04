@@ -10,11 +10,9 @@ relationship data
 from __future__ import print_function
 
 class NetworkRecord:
-    def __init__(self, name, id, distance, friends_list):
+    def __init__(self, name, distance, friends_list):
         # self.name is the name of a person
         self.name = name
-        # self.id is the integer id of the person
-        self.id = id
         # self.distance is the relationship distance to the friends_list
         self.distance = distance
         # self.friends_list is a list of integer ids
@@ -28,4 +26,4 @@ class NetworkRecord:
         self.friends_list = list(set(self.friends_list))
 
     def print_all(self):
-        print("{}, {}, {}, {}".format(self.name, self.id, self.distance, self.friends_list))
+        print("{}, {}, {}".format(self.name, self.distance, self.friends_list))
