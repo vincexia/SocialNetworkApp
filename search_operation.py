@@ -75,8 +75,6 @@ def expand_to_outer_layer(current_list, offset_list, loaded_data_manager):
         # remove duplicates
         full_outer_layer_list = list(set(full_outer_layer_list))
 
-    print("full outer layer list is {}".format(full_outer_layer_list))
-    print ("offset list is {}".format(offset_list))
     # Remove the element shown in offset list, from full_outer_layer_list
     outer_layer_list = [x for x in full_outer_layer_list if x not in offset_list]
 
@@ -87,7 +85,6 @@ def expand_to_outer_layer(current_list, offset_list, loaded_data_manager):
 
     # sort the outer layer list
     outer_layer_list = sort(outer_layer_list)
-    print ("outer layer list is {}".format(outer_layer_list))
     return outer_layer_list
 
 
@@ -156,6 +153,8 @@ def search_distance(id_A, record_A, id_B, record_B, loaded_data_manager):
                         # update the cur with the outer layer
                         increment_distance_B = record_B_search_cur.distance + 1
                         record_B_search_cur = NetworkRecord(record_B.name, increment_distance_B, outer_layer_list_B)
+                        print("Expand to outer layer with distance {} at {} side".format(increment_distance_B,
+                                                                                         record_B.name))
 
                         # toggle active flag to "B"
                         active_flag = "B"
@@ -190,6 +189,8 @@ def search_distance(id_A, record_A, id_B, record_B, loaded_data_manager):
                         # update the cur with the outer layer
                         increment_distance_A = record_A_search_cur.distance + 1
                         record_A_search_cur = NetworkRecord(record_A.name, increment_distance_A, outer_layer_list_A)
+                        print("Expand to outer layer with distance {} at {} side".format(increment_distance_A,
+                                                                                         record_A.name))
 
                         # toggle active flag to "A"
                         active_flag = "A"
