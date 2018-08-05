@@ -41,6 +41,5 @@ Similarly, at B side, there are also a group of relationship circles with the sa
 For distance equal to two or above, the search operation begins at the first circle of origin A. The program will check whether it has the common element with the first circle of origin B. If yes, the distance 2 is returned. Otherwise, the program will expand B to the second circle, and compare B's second circle with A's first circle. 
 
 If no common element is found, the expansion will continue alternatively at A side or at B side. Until at some distance
-the expanded outer layer circle does not exist, it means the A and B have no relationship intersection and no distance
-found between A and B.
+the expanded outer layer circle does not exist, it means that A and B have no relationship intersection point and that no distance can be found between A and B.
 
