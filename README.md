@@ -31,6 +31,7 @@ minimum distance is 5
 Minimum distance for STACEY_STRIMPLE and RICH_OMLI is 5
 
 ################################################################
+
 The core algorithm is placed inside the search_distance() method of search_opertion.py file.
 
 Imagine A is the origin of a group of relationship circles. The first circle represents the direct friends with distance 1. The second circle outwards represents the friends of the first circle elements, but without the origin point A. The third circle outwards represents the friends of the second circle elements, but without the first circle elements. The group of circles with the same origin A represents the relationship distances to origin A.
