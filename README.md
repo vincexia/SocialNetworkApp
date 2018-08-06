@@ -4,7 +4,7 @@ The SocialNetworkApp is used to achieve the two goals below:
 1.	determines the total number of people in the social network
 2.	determines the distance between A and B where the distance between two members of the network can be defined as the minimum number of ties required to connect two people in the social network. The values of A and B are as follows: A = STACEY_STRIMPLE, B = RICH_OMLI
 
-The entry point of the application is social_network_app.py. The python framework is version 2.7. In Windows/Linux/MacOS, execute "python social_network_app.py" to start the application.
+The entry point of the application is social_network_app.py. The python framework is version 2.7. The recommended python is v2.7.13 or later. In Windows/Linux/MacOS, execute "python social_network_app.py" to start the application.
 
 ###############################################################
 
